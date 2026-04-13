@@ -1,0 +1,5 @@
+server:
+  port: 8080
+
+app:
+  storage-path: ${RECIPE_BOOK_STORAGE_PATH:../data/db.json}
