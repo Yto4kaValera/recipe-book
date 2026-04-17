@@ -58,7 +58,7 @@ public class Product {
         if (nutrition == null) {
             throw new IllegalArgumentException("КБЖУ продукта обязательно.");
         }
-        nutrition.validateMacroSum();
+        nutrition.validateProductMacroSum();
     }
 
     public String getId() {

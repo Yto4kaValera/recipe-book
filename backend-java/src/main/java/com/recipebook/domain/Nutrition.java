@@ -29,7 +29,7 @@ public class Nutrition {
         this.carbs = carbs;
     }
 
-    public void validateMacroSum() {
+    public void validateProductMacroSum() {
         if (proteins + fats + carbs > 100) {
             throw new IllegalArgumentException("Сумма БЖУ не может превышать 100.");
         }

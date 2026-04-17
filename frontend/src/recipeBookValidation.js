@@ -8,7 +8,7 @@ const dishMacros = [
   "!перекус"
 ];
 
-function validateNutrition(nutrition, unitLabel) {
+function validateNutrition(nutrition, unitLabel, limitMacroSumToHundred = true) {
   if (!nutrition) {
     return `КБЖУ ${unitLabel} обязательно.`;
   }
@@ -28,12 +28,12 @@ function validateNutrition(nutrition, unitLabel) {
     if (value < 0) {
       return `Поле "${label}" не может быть меньше 0.`;
     }
-    if (maxHundred && value > 100) {
+    if (maxHundred && limitMacroSumToHundred && value > 100) {
       return `Поле "${label}" не может быть больше 100.`;
     }
   }
 
-  if (Number(nutrition.proteins) + Number(nutrition.fats) + Number(nutrition.carbs) > 100) {
+  if (limitMacroSumToHundred && Number(nutrition.proteins) + Number(nutrition.fats) + Number(nutrition.carbs) > 100) {
     return "Сумма БЖУ на 100 грамм не может превышать 100.";
   }
 
@@ -103,7 +103,7 @@ export function validateDishForm(dishForm, products, availableDishFlags) {
     return "Категория блюда обязательна: выберите её вручную или укажите макрос в названии.";
   }
 
-  const nutritionError = validateNutrition(dishForm.nutrition, "блюда");
+  const nutritionError = validateNutrition(dishForm.nutrition, "блюда", false);
   if (nutritionError) {
     return nutritionError;
   }

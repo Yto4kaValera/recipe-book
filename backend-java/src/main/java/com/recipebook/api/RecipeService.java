@@ -203,8 +203,14 @@ public class RecipeService {
         double proteins = 0;
         double fats = 0;
         double carbs = 0;
+        if (ingredients == null || ingredients.isEmpty()) {
+            throw new IllegalArgumentException("Список ингредиентов пуст.");
+        }
 
         for (DishIngredient ingredient : ingredients) {
+            if (ingredient.getAmountGrams() < 0) {
+                throw new IllegalArgumentException("Количество ингредиента должно быть больше 0");
+            }
             Product product = Optional.ofNullable(productMap.get(ingredient.getProductId()))
                     .orElseThrow(() -> new IllegalArgumentException("Продукт в составе блюда не найден: " + ingredient.getProductId()));
             double ratio = ingredient.getAmountGrams() / 100.0;

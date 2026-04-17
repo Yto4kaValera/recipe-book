@@ -177,7 +177,11 @@ export default function DishPanel({
               Добавить продукт
             </button>
           </div>
-          <FieldNutrition value={dishForm.nutrition} onChange={(nutrition) => setDishForm({ ...dishForm, nutrition })} />
+          <FieldNutrition
+            value={dishForm.nutrition}
+            limitMacrosToHundred={false}
+            onChange={(nutrition) => setDishForm({ ...dishForm, nutrition })}
+          />
           <p className="hint">КБЖУ пересчитывается автоматически по составу. После этого значения можно вручную исправить.</p>
           <FlagSelector selected={dishForm.flags} disabled={blockedDishFlags} onChange={(nextFlags) => setDishForm({ ...dishForm, flags: nextFlags })} />
           <button type="submit" disabled={!products.length}>{editingDishId ? "Сохранить изменения" : "Создать блюдо"}</button>

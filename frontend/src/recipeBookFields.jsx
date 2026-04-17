@@ -1,6 +1,6 @@
 import { flagOptions } from "./recipeBookConfig";
 
-export function FieldNutrition({ value, onChange }) {
+export function FieldNutrition({ value, onChange, limitMacrosToHundred = true }) {
   const labels = {
     calories: "Калорийность",
     proteins: "Белки",
@@ -16,7 +16,7 @@ export function FieldNutrition({ value, onChange }) {
           <input
             type="number"
             min="0"
-            max={key === "calories" ? undefined : 100}
+            max={key === "calories" || !limitMacrosToHundred ? undefined : 100}
             step="0.01"
             value={value[key]}
             onChange={(event) => onChange({ ...value, [key]: Number(event.target.value) })}

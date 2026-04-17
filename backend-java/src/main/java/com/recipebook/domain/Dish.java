@@ -60,7 +60,6 @@ public class Dish {
         if (nutrition == null) {
             throw new IllegalArgumentException("КБЖУ блюда обязательно.");
         }
-        nutrition.validateMacroSum();
     }
 
     public String getId() {
