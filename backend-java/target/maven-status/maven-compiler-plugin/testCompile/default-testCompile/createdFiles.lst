@@ -1,4 +1,11 @@
-com\recipebook\RecipeServiceDishDraftCalculationTest$BoundaryValueAnalysis.class
-com\recipebook\RecipeServiceDishDraftCalculationTest$EquivalentPartitioning.class
-com\recipebook\RecipeServiceTest.class
-com\recipebook\RecipeServiceDishDraftCalculationTest.class
+com\recipebook\RecipeApiIntegrationTestSupport$1.class
+com\recipebook\ProductsApi$1.class
+com\recipebook\ProductsApi$ProductsApiGetPutDelete.class
+com\recipebook\DishesApi$1.class
+com\recipebook\RecipeApiIntegrationTestSupport.class
+com\recipebook\DishesApi$DishesApiGetPutDelete.class
+com\recipebook\ProductsApi$3.class
+com\recipebook\ProductsApi$2.class
+com\recipebook\DishesApi.class
+com\recipebook\DishesApi$2.class
+com\recipebook\ProductsApi.class

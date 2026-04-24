@@ -178,7 +178,31 @@ public class RecipeService {
         if (dish.getCategory() == null) {
             throw new IllegalArgumentException("Категория блюда обязательна.");
         }
+        // Auto-calculate draft nutrition from ingredients (TZ 2.2).
+        // If user adjusted any nutrition field manually, keep the provided value(s).
+        Nutrition calculated = calculateNutrition(dish.getIngredients(), products);
+        Nutrition provided = dish.getNutrition();
+        if (provided == null) {
+            dish.setNutrition(calculated);
+        } else {
+            if (isUnsetDraft(provided.getCalories())) {
+                provided.setCalories(calculated.getCalories());
+            }
+            if (isUnsetDraft(provided.getProteins())) {
+                provided.setProteins(calculated.getProteins());
+            }
+            if (isUnsetDraft(provided.getFats())) {
+                provided.setFats(calculated.getFats());
+            }
+            if (isUnsetDraft(provided.getCarbs())) {
+                provided.setCarbs(calculated.getCarbs());
+            }
+        }
         dish.setFlags(cleanDishFlags(dish.getFlags(), dish.getIngredients(), products));
+    }
+
+    private boolean isUnsetDraft(double value) {
+        return Math.abs(value) < 0.0000001;
     }
 
     private EnumSet<DietFlag> cleanDishFlags(EnumSet<DietFlag> flags, List<DishIngredient> ingredients, List<Product> products) {
