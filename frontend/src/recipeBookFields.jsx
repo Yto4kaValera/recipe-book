@@ -1,6 +1,6 @@
 import { flagOptions } from "./recipeBookConfig";
 
-export function FieldNutrition({ value, onChange, limitMacrosToHundred = true }) {
+export function FieldNutrition({ value, onChange, limitMacrosToHundred = true, testIdPrefix = "nutrition" }) {
   const labels = {
     calories: "Калорийность",
     proteins: "Белки",
@@ -18,6 +18,7 @@ export function FieldNutrition({ value, onChange, limitMacrosToHundred = true })
             min="0"
             max={key === "calories" || !limitMacrosToHundred ? undefined : 100}
             step="0.01"
+            data-testid={`${testIdPrefix}-${key}`}
             value={value[key]}
             onChange={(event) => onChange({ ...value, [key]: Number(event.target.value) })}
           />
@@ -27,13 +28,14 @@ export function FieldNutrition({ value, onChange, limitMacrosToHundred = true })
   );
 }
 
-export function FlagSelector({ selected, onChange, disabled = [] }) {
+export function FlagSelector({ selected, onChange, disabled = [], testIdPrefix = "flag" }) {
   return (
     <div className="flag-row">
       {flagOptions.map((flag) => (
         <label key={flag.value} className={`flag-chip ${disabled.includes(flag.value) ? "disabled" : ""}`}>
           <input
             type="checkbox"
+            data-testid={`${testIdPrefix}-${flag.value}`}
             checked={selected.includes(flag.value)}
             disabled={disabled.includes(flag.value)}
             onChange={(event) => {

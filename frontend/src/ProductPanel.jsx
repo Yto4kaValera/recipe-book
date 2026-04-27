@@ -67,69 +67,82 @@ export default function ProductPanel({
                         </button>
                     </div>
 
-                    <div className="filters">
+                    <div className="filters" data-testid="product-filters">
                         <button type="button" onClick={openNewForm}>Новый продукт</button>
                         <input
+                            data-testid="product-search"
                             placeholder="Поиск по названию"
                             value={productFilters.search}
                             onChange={(event) => setProductFilters({ ...productFilters, search: event.target.value })}
                         />
-                        <select value={productFilters.category} onChange={(event) => setProductFilters({ ...productFilters, category: event.target.value })}>
+                        <select data-testid="product-category-filter" value={productFilters.category} onChange={(event) => setProductFilters({ ...productFilters, category: event.target.value })}>
                             <option value="">Все категории</option>
                             {productCategoryOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
                         </select>
-                        <select value={productFilters.cookingState} onChange={(event) => setProductFilters({ ...productFilters, cookingState: event.target.value })}>
+                        <select data-testid="product-cooking-filter" value={productFilters.cookingState} onChange={(event) => setProductFilters({ ...productFilters, cookingState: event.target.value })}>
                             <option value="">Любая готовность</option>
                             {cookingStateOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
                         </select>
-                        <select value={productFilters.sortBy} onChange={(event) => setProductFilters({ ...productFilters, sortBy: event.target.value })}>
+                        <select data-testid="product-sort-filter" value={productFilters.sortBy} onChange={(event) => setProductFilters({ ...productFilters, sortBy: event.target.value })}>
                             {sortOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
                         </select>
-                        <FlagSelector selected={productFilters.flags} onChange={(nextFlags) => setProductFilters({ ...productFilters, flags: nextFlags })} />
+                        <FlagSelector
+                            testIdPrefix="product-filter-flag"
+                            selected={productFilters.flags}
+                            onChange={(nextFlags) => setProductFilters({ ...productFilters, flags: nextFlags })}
+                        />
                     </div>
 
                     {isFormOpen ? (
-                        <form className="stack form-card" onSubmit={saveProduct}>
+                        <form className="stack form-card" data-testid="product-form" onSubmit={saveProduct}>
                             <div className="section-head">
                                 <h3>{editingProductId ? "Редактирование продукта" : "Создание продукта"}</h3>
                                 <button type="button" className="secondary section-action" onClick={() => setIsFormOpen(false)}>Закрыть</button>
                             </div>
                             <label>
                                 Название
-                                <input minLength={2} required value={productForm.name} onChange={(event) => setProductForm({ ...productForm, name: event.target.value })} />
+                                <input data-testid="product-name" minLength={2} required value={productForm.name} onChange={(event) => setProductForm({ ...productForm, name: event.target.value })} />
                             </label>
                             <PhotoPicker
                                 photos={productForm.photos}
                                 onChange={(photos) => setProductForm({ ...productForm, photos })}
                                 onError={setMessage}
                             />
-                            <FieldNutrition value={productForm.nutrition} onChange={(nutrition) => setProductForm({ ...productForm, nutrition })} />
+                            <FieldNutrition
+                                testIdPrefix="product-nutrition"
+                                value={productForm.nutrition}
+                                onChange={(nutrition) => setProductForm({ ...productForm, nutrition })}
+                            />
                             <label>
                                 Состав
-                                <textarea value={productForm.composition} onChange={(event) => setProductForm({ ...productForm, composition: event.target.value })} />
+                                <textarea data-testid="product-composition" value={productForm.composition} onChange={(event) => setProductForm({ ...productForm, composition: event.target.value })} />
                             </label>
                             <div className="two-cols">
                                 <label>
                                     Категория
-                                    <select value={productForm.category} onChange={(event) => setProductForm({ ...productForm, category: event.target.value })}>
+                                    <select data-testid="product-category" value={productForm.category} onChange={(event) => setProductForm({ ...productForm, category: event.target.value })}>
                                         {productCategoryOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
                                     </select>
                                 </label>
                                 <label>
                                     Необходимость готовки
-                                    <select value={productForm.cookingState} onChange={(event) => setProductForm({ ...productForm, cookingState: event.target.value })}>
+                                    <select data-testid="product-cooking-state" value={productForm.cookingState} onChange={(event) => setProductForm({ ...productForm, cookingState: event.target.value })}>
                                         {cookingStateOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
                                     </select>
                                 </label>
                             </div>
-                            <FlagSelector selected={productForm.flags} onChange={(nextFlags) => setProductForm({ ...productForm, flags: nextFlags })} />
+                            <FlagSelector
+                                testIdPrefix="product-flag"
+                                selected={productForm.flags}
+                                onChange={(nextFlags) => setProductForm({ ...productForm, flags: nextFlags })}
+                            />
                             <button type="submit">{editingProductId ? "Сохранить изменения" : "Создать продукт"}</button>
                         </form>
                     ) : null}
 
-                    <div className="cards">
+                    <div className="cards" data-testid="product-cards">
                         {products.map((product) => (
-                            <article key={product.id} className="card">
+                            <article key={product.id} className="card" data-testid={`product-card-${product.id}`}>
                                 <div className="card-head">
                                     <div>
                                         <h3>{product.name}</h3>

@@ -78,29 +78,34 @@ export default function DishPanel({
         </button>
       </div>
 
-      <div className="filters">
+      <div className="filters" data-testid="dish-filters">
         <button type="button" onClick={openNewForm}>Новое блюдо</button>
         <input
+          data-testid="dish-search"
           placeholder="Поиск по названию"
           value={dishFilters.search}
           onChange={(event) => setDishFilters({ ...dishFilters, search: event.target.value })}
         />
-        <select value={dishFilters.category} onChange={(event) => setDishFilters({ ...dishFilters, category: event.target.value })}>
+        <select data-testid="dish-category-filter" value={dishFilters.category} onChange={(event) => setDishFilters({ ...dishFilters, category: event.target.value })}>
           <option value="">Все категории</option>
           {dishCategoryOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
         </select>
-        <FlagSelector selected={dishFilters.flags} onChange={(nextFlags) => setDishFilters({ ...dishFilters, flags: nextFlags })} />
+        <FlagSelector
+          testIdPrefix="dish-filter-flag"
+          selected={dishFilters.flags}
+          onChange={(nextFlags) => setDishFilters({ ...dishFilters, flags: nextFlags })}
+        />
       </div>
 
       {isFormOpen ? (
-        <form className="stack form-card" onSubmit={saveDish}>
+        <form className="stack form-card" data-testid="dish-form" onSubmit={saveDish}>
           <div className="section-head">
             <h3>{editingDishId ? "Редактирование блюда" : "Создание блюда"}</h3>
             <button type="button" className="secondary section-action" onClick={() => setIsFormOpen(false)}>Закрыть</button>
           </div>
           <label>
             Название
-            <input minLength={2} required value={dishForm.name} onChange={(event) => setDishForm({ ...dishForm, name: event.target.value })} />
+            <input data-testid="dish-name" minLength={2} required value={dishForm.name} onChange={(event) => setDishForm({ ...dishForm, name: event.target.value })} />
           </label>
           <PhotoPicker
             photos={dishForm.photos}
@@ -110,6 +115,7 @@ export default function DishPanel({
           <label>
             Размер порции, г
             <input
+              data-testid="dish-portion-size"
               type="number"
               min="0.01"
               step="0.01"
@@ -120,7 +126,7 @@ export default function DishPanel({
           </label>
           <label>
             Категория
-            <select value={dishForm.category || ""} onChange={(event) => setDishForm({ ...dishForm, category: event.target.value })}>
+            <select data-testid="dish-category" value={dishForm.category || ""} onChange={(event) => setDishForm({ ...dishForm, category: event.target.value })}>
               <option value="">Определить по макросу или выбрать вручную</option>
               {dishCategoryOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
             </select>
@@ -128,8 +134,9 @@ export default function DishPanel({
           <div className="stack">
             <strong>Состав блюда</strong>
             {dishForm.ingredients.map((ingredient, index) => (
-              <div key={index} className="ingredient-row">
+              <div key={index} className="ingredient-row" data-testid={`dish-ingredient-row-${index}`}>
                 <select
+                  data-testid={`dish-ingredient-product-${index}`}
                   value={ingredient.productId}
                   onChange={(event) => {
                     const next = [...dishForm.ingredients];
@@ -141,6 +148,7 @@ export default function DishPanel({
                   {products.map((product) => <option key={product.id} value={product.id}>{product.name}</option>)}
                 </select>
                 <input
+                  data-testid={`dish-ingredient-amount-${index}`}
                   type="number"
                   min="0.01"
                   step="0.01"
@@ -154,6 +162,7 @@ export default function DishPanel({
                 <button
                   type="button"
                   className="secondary"
+                  data-testid={`dish-ingredient-remove-${index}`}
                   onClick={() => {
                     const nextIngredients = dishForm.ingredients.filter((_, current) => current !== index);
                     setDishForm({
@@ -169,6 +178,7 @@ export default function DishPanel({
             <button
               type="button"
               className="secondary"
+              data-testid="dish-add-ingredient"
               onClick={() => setDishForm({
                 ...dishForm,
                 ingredients: [...dishForm.ingredients, { productId: "", amountGrams: 100 }]
@@ -178,21 +188,27 @@ export default function DishPanel({
             </button>
           </div>
           <FieldNutrition
+            testIdPrefix="dish-nutrition"
             value={dishForm.nutrition}
             limitMacrosToHundred={false}
             onChange={(nutrition) => setDishForm({ ...dishForm, nutrition })}
           />
           <p className="hint">КБЖУ пересчитывается автоматически по составу. После этого значения можно вручную исправить.</p>
-          <FlagSelector selected={dishForm.flags} disabled={blockedDishFlags} onChange={(nextFlags) => setDishForm({ ...dishForm, flags: nextFlags })} />
+          <FlagSelector
+            testIdPrefix="dish-flag"
+            selected={dishForm.flags}
+            disabled={blockedDishFlags}
+            onChange={(nextFlags) => setDishForm({ ...dishForm, flags: nextFlags })}
+          />
           <button type="submit" disabled={!products.length}>{editingDishId ? "Сохранить изменения" : "Создать блюдо"}</button>
         </form>
       ) : null}
 
       {!products.length ? <p className="hint">Сначала создайте хотя бы один продукт, затем можно будет добавить блюдо.</p> : null}
 
-      <div className="cards">
+      <div className="cards" data-testid="dish-cards">
         {dishes.map((dish) => (
-          <article key={dish.id} className="card">
+          <article key={dish.id} className="card" data-testid={`dish-card-${dish.id}`}>
             <div className="card-head">
               <div>
                 <h3>{dish.name}</h3>

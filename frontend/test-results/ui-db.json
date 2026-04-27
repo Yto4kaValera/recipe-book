@@ -1,0 +1,39 @@
+{
+  "products" : [ {
+    "id" : "bc7a08ab-3ca5-49b7-ab51-37a74ac3cea6",
+    "name" : "Рис",
+    "photos" : [ ],
+    "nutrition" : {
+      "calories" : 330.0,
+      "proteins" : 7.0,
+      "fats" : 0.7,
+      "carbs" : 78.0
+    },
+    "composition" : null,
+    "category" : "GRAINS",
+    "cookingState" : "NEEDS_COOKING",
+    "flags" : [ ],
+    "createdAt" : "2026-04-27T12:37:46.280828200Z",
+    "updatedAt" : null
+  } ],
+  "dishes" : [ {
+    "id" : "4d8780ea-2601-4d21-8b65-954a6f759b3f",
+    "name" : "Рисовая тарелка",
+    "photos" : [ ],
+    "nutrition" : {
+      "calories" : 495.0,
+      "proteins" : 10.5,
+      "fats" : 1.05,
+      "carbs" : 117.0
+    },
+    "ingredients" : [ {
+      "productId" : "bc7a08ab-3ca5-49b7-ab51-37a74ac3cea6",
+      "amountGrams" : 150.0
+    } ],
+    "portionSize" : 200.0,
+    "category" : "SECOND",
+    "flags" : [ ],
+    "createdAt" : "2026-04-27T12:37:46.413068800Z",
+    "updatedAt" : null
+  } ]
+}

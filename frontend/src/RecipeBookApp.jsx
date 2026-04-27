@@ -249,7 +249,7 @@ export default function RecipeBookApp() {
             </button>
           </div>
         </div>
-        {message ? <div className="banner">{message}</div> : null}
+        {message ? <div className="banner" data-testid="app-banner">{message}</div> : null}
       </header>
 
       <main className="single-layout">
